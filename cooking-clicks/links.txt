@@ -1,0 +1,21 @@
+https://www.cs.cornell.edu/%7Earb/data/cat-edge-Cooking/
+
+cat-edge-Cooking dataset
+Hypergraph where nodes are food ingredients, hyperedges are recipes made from combining multiple ingredients and categories indicate cuisine (e.g., "Southern-US", "Indian", "Spanish"). Raw data was obtained from the "What's Cooking?" Kaggle competition. Some summary statistics of the network are:
+
+    number of nodes: 6,714
+    number of hyperedges: 39,774
+    number of edge label categories: 20
+    rank of hypergraph (maximum hyperedge size): 65
+
+Data files:
+
+    cat-edge-Cooking.zip
+
+If you use this data, please cite the following paper:
+
+    Clustering in graphs and hypergraphs with categorical edge labels.
+    Ilya Amburg, Nate Veldt, and Austin R. Benson.
+    Proceedings of the Web Conference (WWW), 2020.
+    [bibtex]
+
