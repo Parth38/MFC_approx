@@ -46,18 +46,30 @@ def hyperedges_to_sparse_matrix(hyperedges):
     return csr_matrix((data, (row_ind, col_ind)), shape=(n_hyperedges, n_nodes))
 
 def main():
+
+    output_prims = 'trivago_10pct_prims_jaccard.txt'
+    output_kruskals = 'trivago_10pct_kruskals_jaccard.txt'
+    file_hyperedges = 'trivago-samples/hyperedges-sample10pct.txt' # 10 % FILE
+    file_labels = 'trivago-samples/node-labels-sample10pct.txt' # 10 % FILE
+    #file_path = 'trivago-samples/hyperedges-sample20pct.txt' # 10 % FILE
+    #file_path = 'trivago-samples/hyperedges-sample100pct.txt' # 10 % FILE
+
     # Load and process data
     print("Loading hyperedges...")
-    hyperedges = load_hyperedges('trivago-clicks/hyperedges-trivago-clicks.txt')
+    hyperedges = load_hyperedges(file_hyperedges)
     print(f"Loaded {len(hyperedges)} hyperedges")
     
     print("Loading labels...")
-    labels = load_labels('trivago-clicks/node-labels-trivago-clicks.txt')
+    labels = load_labels(file_labels)
     print(f"Loaded {len(labels)} labels")
     
     print("Converting to sparse matrix...")
     sparse_matrix = hyperedges_to_sparse_matrix(hyperedges)
     print(f"Created sparse matrix with shape {sparse_matrix.shape}")
+    
+    # Transpose the matrix so rows represent nodes
+    sparse_matrix = sparse_matrix.transpose()
+    print(f"Transposed matrix shape {sparse_matrix.shape}")
     
     # Run MFC-Approx algorithm
     print("\nRunning MFC-Approx algorithm...")

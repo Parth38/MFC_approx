@@ -61,8 +61,16 @@ def save_tree(edges, filename):
 
 def main():
     # Load and process data
+
+
+    output_prims = 'cooking_10pct_prims_jaccard.txt'
+    output_kruskals = 'cooking_10pct_kruskals_jaccard.txt'
+    file_path = 'cooking-samples/hyperedges-sample10pct.txt' # 10 % FILE
+    #file_path = 'cooking-samples/hyperedges-sample20pct.txt' # 10 % FILE
+    #file_path = 'cooking-samples/hyperedges-sample100pct.txt' # 10 % FILE
+
     print("Loading hyperedges...")
-    hyperedges = load_hyperedges('trivago-clicks/hyperedges-trivago-clicks.txt')
+    hyperedges = load_hyperedges(file_path)
     print(f"Loaded {len(hyperedges)} hyperedges")
     
     print("Converting to sparse matrix...")
@@ -76,13 +84,13 @@ def main():
     prims_result = run_mst_algorithm(PrimsMST, sparse_matrix, weight_function)
     print(f"Prim's runtime: {prims_result['runtime']:.2f} seconds")
     print(f"Prim's total weight: {prims_result['total_weight']:.4f}")
-    save_tree(prims_result['edges'], 'trivago_prims_jaccard.txt')
+    save_tree(prims_result['edges'], output_prims)
     
     print("\nRunning Kruskal's algorithm...")
     kruskals_result = run_mst_algorithm(KruskalsMST, sparse_matrix, weight_function)
     print(f"Kruskal's runtime: {kruskals_result['runtime']:.2f} seconds")
     print(f"Kruskal's total weight: {kruskals_result['total_weight']:.4f}")
-    save_tree(kruskals_result['edges'], 'trivago_kruskals_jaccard.txt')
+    save_tree(kruskals_result['edges'], output_kruskals)
 
 if __name__ == "__main__":
     main() 

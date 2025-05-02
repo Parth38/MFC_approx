@@ -46,13 +46,22 @@ def hyperedges_to_sparse_matrix(hyperedges):
     return csr_matrix((data, (row_ind, col_ind)), shape=(n_hyperedges, n_nodes))
 
 def main():
+
+    
+    output_prims = 'cooking_10pct_prims_jaccard.txt'
+    output_kruskals = 'cooking_10pct_kruskals_jaccard.txt'
+    file_hyperedges = 'cooking-samples/hyperedges-sample10pct.txt' # 10 % FILE
+    file_labels = 'cooking-samples/node-labels-sample10pct.txt' # 10 % FILE
+    #file_path = 'cooking-samples/hyperedges-sample20pct.txt' # 10 % FILE
+    #file_path = 'cooking-samples/hyperedges-sample100pct.txt' # 10 % FILE
+
     # Load and process data
     print("Loading hyperedges...")
-    hyperedges = load_hyperedges('trivago-clicks/hyperedges-trivago-clicks.txt')
+    hyperedges = load_hyperedges(file_hyperedges)
     print(f"Loaded {len(hyperedges)} hyperedges")
     
     print("Loading labels...")
-    labels = load_labels('trivago-clicks/node-labels-trivago-clicks.txt')
+    labels = load_labels(file_labels)
     print(f"Loaded {len(labels)} labels")
     
     print("Converting to sparse matrix...")
