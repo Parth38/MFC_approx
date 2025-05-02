@@ -7,53 +7,53 @@ import glob
 #CONSTANTS
 
 PARTITIONS_FOLDER = './cooking-data/partitions/'                            # FOLDER CONTAINING THE PARTITIONS OF THE INITIAL FOREST (Partition per file)
+#MFC_APPROX_TREE_FILE =  './trivago-data/mfc_approx_final_tree.txt'          # MFC-APPROX TREE
+#OPTIMAL_MST_FILE = './trivago-data/true_mst.txt'     # OPTIMAL MST    
 MFC_APPROX_TREE_FILE =  './cooking-data/mfc_approx_final_tree.txt'          # MFC-APPROX TREE
-OPTIMAL_MST_FILE = './cooking-data/cooking_10pct_kruskals_jaccard.txt'     # OPTIMAL MST
-    
+OPTIMAL_MST_FILE = './cooking-data/true_mst.txt'     # OPTIMAL MST    
 
-
-def calculate_gamma(partitions: Dict[int, List[Tuple[int, int, float]]], 
-                   optimal_mst: List[Tuple[int, int, float]], 
-                   initial_forest: List[Tuple[int, int, float]]) -> float:
-    """Calculate Gamma value for the MFC-Approx algorithm.
-    
-    Args:
-        partitions: Dictionary mapping partition labels to lists of edges
-        optimal_mst: List of edges in the optimal MST, each edge is a tuple (u, v, w)
-        initial_forest: List of edges in the initial forest, each edge is a tuple (u, v, w)
-        
-    Returns:
-        float: Gamma value
+def calculate_gamma(
+        partitions: Dict[int, List[Tuple[int, int, float]]],
+        optimal_mst: List[Tuple[int, int, float]],
+        initial_forest: List[Tuple[int, int, float]]) -> float:
     """
-    # Calculate numerator (weight of initial forest)
-    weight_of_initial_forest = sum(w for _, _, w in initial_forest)
-    
-    # Calculate denominator (weight of MST edges inside partitions)
-    total_mst_weight_in_partitions = 0
-    
-    # Process each MST edge exactly once
-    for u, v, w in optimal_mst:
-        # Check if this edge is contained within any partition
-        for partition_edges in partitions.values():
-            # Get all nodes in this partition
-            nodes_in_partition = set()
-            for node1, node2, _ in partition_edges:
-                nodes_in_partition.add(node1)
-                nodes_in_partition.add(node2)
-            
-            # Check if both endpoints are in this partition
-            if u in nodes_in_partition and v in nodes_in_partition:
-                total_mst_weight_in_partitions += w
-                break  # Once we've found a containing partition, move to next edge
-    
-    # Calculate gamma
-    if total_mst_weight_in_partitions == 0:
-        return float('inf')  # Avoid division by zero
-    else:
-        gamma = weight_of_initial_forest / total_mst_weight_in_partitions
-    
-    return gamma
+    γ =   Σ_{(u,v,w) ∈ F  :  pid(u)=pid(v)}  w
+        -------------------------------------------------
+          Σ_{(u,v,w) ∈ T* :  pid(u)=pid(v)}  w
 
+    • partitions : {pid: [(u,v,w), …]}   intra‑partition trees (F)
+    • optimal_mst: [(u,v,w), …]          global MST   (T*)
+    • initial_forest should be the union of all partition trees.
+
+    Any edge whose endpoints belong to *different* partitions is ignored
+    in both numerator and denominator.
+    """
+
+    # ------------------------------------------------------------------ A. node → partition id
+    node2pid: Dict[int, int] = {}
+    for pid, edges in partitions.items():
+        for u, v, _ in edges:
+            node2pid[u] = pid
+            node2pid[v] = pid
+
+    # ------------------------------------------------------------------ B. numerator  (inside‑P edges of F)
+    num = 0.0
+    for u, v, w in initial_forest:
+        pid = node2pid.get(u)
+        if pid is not None and pid == node2pid.get(v):
+            num += w                                            # same partition
+
+    # ------------------------------------------------------------------ C. denominator  (inside‑P edges of T*)
+    den = 0.0
+    for u, v, w in optimal_mst:
+        pid = node2pid.get(u)
+        if pid is not None and pid == node2pid.get(v):
+            den += w
+
+    if den == 0:
+        raise ValueError("Denominator in γ is zero – check partitions!")
+
+    return num / den
 
 def calculate_beta(mfc_mst: List[Tuple[int, int, float]], optimal_mst: List[Tuple[int, int, float]]) -> float:
     """Calculate Beta value for the MFC-Approx algorithm.                       
@@ -165,9 +165,37 @@ def is_connected(edges: List[Tuple[int, int, float]]) -> bool:
     # Graph is connected if all nodes were visited
     return len(visited) == len(nodes)
 
+
+def gamma_calculator(optimal_mst: List[Tuple[int, int, float]], partitions: Dict[int, List[Tuple[int, int, float]]]) -> float:
+    summ_of_weights_in_partitions = 0
+    summ_of_weights_in_optimal_mst = 0
+
+    # Iterate through each partition's edges
+    partition_nodes = {}
+    for key, partition_edges in partitions.items():
+        # Create a set of nodes in this partition
+        pNodes = {node for edge in partition_edges for node in edge[:2]}
+        partition_nodes[key] = pNodes
+        
+        for edge in partition_edges:
+            summ_of_weights_in_partitions += edge[2]
+
+    for edge in optimal_mst:
+        # Check if both nodes are in the same partition
+        for partition_set in partition_nodes.values():
+            if edge[0] in partition_set and edge[1] in partition_set:
+                summ_of_weights_in_optimal_mst += edge[2]
+                break
+
+    if summ_of_weights_in_optimal_mst == 0:
+        return float('inf')
+    return summ_of_weights_in_partitions / summ_of_weights_in_optimal_mst
+
+        
 def main():
     # Load partitions
     partitions = load_partitions(PARTITIONS_FOLDER)
+    
     print(f"Loaded {len(partitions)} partitions")
     
     # Load MFC-Approx tree
@@ -195,7 +223,9 @@ def main():
     print(f"Beta: {beta}")
     
     #calculate gamma
-    gamma = calculate_gamma(partitions, optimal_mst, mfc_approx_mst)
+    initial_forest = [e for edges in partitions.values() for e in edges]
+    gamma = gamma_calculator(optimal_mst, partitions)
+   
     print(f"Gamma: {gamma}")
 
 if __name__ == "__main__":

@@ -1,0 +1,155 @@
+PS D:\GitHub\MFC_approx> & "C:/Program Files/Python39/python.exe" d:/GitHub/M
+Loading hyperedges...
+Loaded 11659 hyperedges
+Loading labels...
+Loaded 27771 labels
+11659
+Converting to sparse matrix...
+Created sparse matrix with shape (11659, 27771)
+
+Running TRUE MST, OPTIMAL MFC AND APPROX MFC ...
+Grouped 20 singleton vertices into partition 138
+Computing partition trees...
+Computing coarsened graph...
+Computing Aprox final tree...
+MFC‑Approx (rep‑only) total weight: 11549.836711668971
+
+APPROX MFC T^ runtime: 305.38 seconds
+PS D:\GitHub\MFC_approx> & "C:/Program Files/Python39/python.exe" d:/GitHub/M
+Loading hyperedges...
+Loaded 11659 hyperedges
+Loading labels...
+Loaded 27771 labels
+11659
+Converting to sparse matrix...
+Created sparse matrix with shape (11659, 27771)
+
+Running TRUE MST, OPTIMAL MFC AND APPROX MFC ...
+Grouped 20 singleton vertices into partition 138
+Computing partition trees...
+Computing coarsened graph...
+Computing Aprox final tree...
+MFC‑Approx (rep‑only) total weight: 11549.85656686251
+
+APPROX MFC T^ runtime: 312.91 seconds
+Total weight of APPROX MFC T^: 11549.8566
+PS D:\GitHub\MFC_approx> & "C:/Program Files/Python39/python.exe" d:/GitHub/M
+Loaded 113 partitions
+Loaded MFC-Approx tree with 11668 edges
+MFC-Approx tree is connected
+Loaded optimal MST with 11658 edges
+Optimal MST is connected
+Partition 1: 670 edges
+Partition 10: 572 edges
+Partition 101: 3 edges
+Partition 102: 3 edges
+Partition 103: 1 edges
+Partition 105: 4 edges
+Partition 106: 4 edges
+Partition 108: 3 edges
+Partition 11: 82 edges
+Partition 110: 2 edges
+Partition 112: 3 edges
+Partition 114: 3 edges
+Partition 115: 3 edges
+Partition 118: 2 edges
+Partition 12: 51 edges
+Partition 120: 1 edges
+Partition 121: 5 edges
+Partition 124: 1 edges
+Partition 129: 1 edges
+Partition 13: 141 edges
+Partition 132: 2 edges
+Partition 134: 1 edges
+Partition 137: 1 edges
+Partition 138: 19 edges
+Partition 14: 668 edges
+Partition 15: 243 edges
+Partition 16: 114 edges
+Partition 17: 978 edges
+Partition 18: 144 edges
+Partition 19: 252 edges
+Partition 20: 52 edges
+Partition 21: 26 edges
+Partition 22: 50 edges
+Partition 23: 532 edges
+Partition 24: 174 edges
+Partition 25: 236 edges
+Partition 26: 673 edges
+Partition 27: 384 edges
+Partition 28: 408 edges
+Partition 29: 59 edges
+Partition 3: 362 edges
+Partition 30: 179 edges
+Partition 31: 208 edges
+Partition 32: 126 edges
+Partition 33: 189 edges
+Partition 34: 68 edges
+Partition 35: 184 edges
+Partition 36: 3 edges
+Partition 37: 63 edges
+Partition 38: 39 edges
+Partition 39: 34 edges
+Partition 4: 81 edges
+Partition 40: 62 edges
+Partition 41: 62 edges
+Partition 42: 19 edges
+Partition 43: 11 edges
+Partition 44: 8 edges
+Partition 45: 89 edges
+Partition 46: 10 edges
+Partition 47: 121 edges
+Partition 48: 140 edges
+Partition 49: 43 edges
+Partition 5: 1066 edges
+Partition 50: 2 edges
+Partition 51: 6 edges
+Partition 52: 53 edges
+Partition 53: 18 edges
+Partition 54: 27 edges
+Partition 55: 9 edges
+Partition 56: 23 edges
+Partition 57: 33 edges
+Partition 58: 43 edges
+Partition 59: 10 edges
+Partition 6: 386 edges
+Partition 60: 68 edges
+Partition 61: 8 edges
+Partition 62: 21 edges
+Partition 63: 1 edges
+Partition 64: 1 edges
+Partition 65: 9 edges
+Partition 66: 16 edges
+Partition 67: 11 edges
+Partition 68: 17 edges
+Partition 69: 3 edges
+Partition 7: 57 edges
+Partition 70: 1 edges
+Partition 71: 13 edges
+Partition 72: 11 edges
+Partition 73: 15 edges
+Partition 74: 1 edges
+Partition 75: 16 edges
+Partition 77: 26 edges
+Partition 78: 4 edges
+Partition 79: 2 edges
+Partition 8: 588 edges
+Partition 80: 56 edges
+Partition 82: 8 edges
+Partition 83: 19 edges
+Partition 84: 2 edges
+Partition 85: 25 edges
+Partition 87: 6 edges
+Partition 89: 6 edges
+Partition 9: 96 edges
+Partition 90: 1 edges
+Partition 91: 6 edges
+Partition 92: 18 edges
+Partition 93: 34 edges
+Partition 94: 1 edges
+Partition 96: 13 edges
+Partition 97: 1 edges
+Partition 98: 6 edges
+Partition 99: 1 edges
+Beta: 1.1416854380391719
+Gamma: 47.08190691051587

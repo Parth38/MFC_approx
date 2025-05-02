@@ -62,7 +62,7 @@ def save_tree(edges, filename):
 def main():
     # Load and process data
     print("Loading hyperedges...")
-    hyperedges = load_hyperedges('trivago-clicks/hyperedges-trivago-clicks.txt')
+    hyperedges = load_hyperedges('trivago-samples/hyperedges-sample5pct.txt')
     print(f"Loaded {len(hyperedges)} hyperedges")
     
     print("Converting to sparse matrix...")
@@ -72,11 +72,11 @@ def main():
     # Run algorithms
     weight_function = JaccardWeight()
     
-    print("\nRunning Prim's algorithm...")
-    prims_result = run_mst_algorithm(PrimsMST, sparse_matrix, weight_function)
-    print(f"Prim's runtime: {prims_result['runtime']:.2f} seconds")
-    print(f"Prim's total weight: {prims_result['total_weight']:.4f}")
-    save_tree(prims_result['edges'], 'trivago_prims_jaccard.txt')
+  #  print("\nRunning Prim's algorithm...")
+  #  prims_result = run_mst_algorithm(PrimsMST, sparse_matrix, weight_function)
+  #  print(f"Prim's runtime: {prims_result['runtime']:.2f} seconds")
+  #  print(f"Prim's total weight: {prims_result['total_weight']:.4f}")
+  #  save_tree(prims_result['edges'], 'trivago_prims_jaccard.txt')
     
     print("\nRunning Kruskal's algorithm...")
     kruskals_result = run_mst_algorithm(KruskalsMST, sparse_matrix, weight_function)

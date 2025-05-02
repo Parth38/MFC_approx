@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "./mst_algorithms/mst_algorithms"
+    ]
+}
